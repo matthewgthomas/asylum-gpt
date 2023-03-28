@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPT-4 SQLite Interface</title>
+</head>
+<body>
+    <h1>GPT-4 SQLite Interface</h1>
+    <form method="POST">
+        <label for="query">Enter your natural language query:</label><br>
+        <textarea name="query" id="query" rows="4" cols="50" required></textarea><br>
+        <input type="submit" value="Submit">
+    </form>
+    {% if result %}
+    <h2>Result:</h2>
+    <pre>{{ result }}</pre>
+    {% endif %}
+</body>
+</html>
