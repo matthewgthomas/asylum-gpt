@@ -27,12 +27,12 @@ def index():
     return render_template('index.html')
 
 def get_database_schema():
-    result = db.engine.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    result = db.session.execute("SELECT name FROM sqlite_master WHERE type='table';")
     tables = [table[0] for table in result.fetchall()]
 
     schema = []
     for table in tables:
-        result = db.engine.execute(f"PRAGMA table_info({table});")
+        result = db.session.execute(f"PRAGMA table_info({table});")
         fields = [column[1] for column in result.fetchall()]
         schema.append(f"{table} ({', '.join(fields)})")
 
@@ -56,7 +56,7 @@ def process_query(query):
 
 def execute_sql(sql_query):
     try:
-        result = db.engine.execute(sql_query)
+        result = db.session.execute(sql_query)
         return result.fetchall()
     except Exception as e:
         return str(e)
