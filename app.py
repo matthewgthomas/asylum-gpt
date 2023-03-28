@@ -6,7 +6,7 @@ import openai
 openai.api_key = "your_openai_api_key_here"
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///your_database_file.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///asylum.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
