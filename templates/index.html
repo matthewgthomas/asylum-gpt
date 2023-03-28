@@ -12,6 +12,21 @@
         <textarea name="query" id="query" rows="4" cols="50" required></textarea><br>
         <input type="submit" value="Submit">
     </form>
+    {% if prompt %}
+    <h2>GPT prompt:</h2>
+    <pre>{{ prompt }}</pre>
+    {% endif %}
+    <br/>
+    {% if response %}
+    <h2>GPT response:</h2>
+    <pre>{{ response }}</pre>
+    {% endif %}
+    <br/>
+    {% if sql_query %}
+    <h2>SQL query:</h2>
+    <pre>{{ sql_query }}</pre>
+    {% endif %}
+    <br/>
     {% if result %}
     <h2>Result:</h2>
     <pre>{{ result }}</pre>

@@ -22,8 +22,8 @@ def index():
     if request.method == 'POST':
         query = request.form['query']
         # Process the query with GPT-4 and SQLite
-        result = process_query(query)
-        return render_template('index.html', result=result)
+        prompt, response, sql_query, result = process_query(query)
+        return render_template('index.html', prompt=prompt, response=response, sql_query=sql_query, result=result)
     return render_template('index.html')
 
 def get_database_schema():
@@ -52,7 +52,7 @@ def process_query(query):
 
     sql_query = response.choices[0].text.strip()
     result = execute_sql(sql_query)
-    return result
+    return prompt, response, sql_query, result
 
 def execute_sql(sql_query):
     try:
