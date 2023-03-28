@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.sql import text
 import openai
 
 # Replace with your OpenAI API key
@@ -27,7 +28,7 @@ def index():
     return render_template('index.html')
 
 def get_database_schema():
-    result = db.session.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    result = db.session.execute(text("SELECT name FROM sqlite_master WHERE type='table';"))
     tables = [table[0] for table in result.fetchall()]
 
     schema = []
@@ -56,7 +57,7 @@ def process_query(query):
 
 def execute_sql(sql_query):
     try:
-        result = db.session.execute(sql_query)
+        result = db.session.execute(text(sql_query))
         return result.fetchall()
     except Exception as e:
         return str(e)
