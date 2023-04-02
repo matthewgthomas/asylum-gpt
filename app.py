@@ -3,7 +3,31 @@ from langchain import OpenAI, SQLDatabase, SQLDatabaseChain
 
 app = Flask(__name__)
 
-db = SQLDatabase.from_uri("sqlite:///asylum.db")
+# Custom info for the "irregulat migration" table
+irreg_table_info = {
+    "irregular_migration": """
+CREATE TABLE irregular_migration (
+	"Date" REAL, 
+	"Year" REAL, 
+	"Quarter" INTEGER, 
+	"Method_of_entry" TEXT, 
+	"Nationality" TEXT, 
+	"Region" TEXT, 
+	"Sex" TEXT, 
+	"Age_Group" TEXT, 
+	"Number_of_detections" REAL
+)
+/*
+3 rows from irregular_migration table:
+Date	Year	Quarter	Method_of_entry	Nationality	Region	Sex	Age_Group	Number_of_detections
+17532.0	2018.0	1	Inadequately documented air arrivals	Afghanistan	Asia Central	Female	18-24	4.0
+17532.0	2018.0	1	Recorded detections in the UK	Afghanistan	Asia Central	Female	25-39	14.0
+17532.0	2018.0	1	Small boat arrivals	Afghanistan	Asia Central	Female	40+	22.0
+*/
+"""
+}
+
+db = SQLDatabase.from_uri("sqlite:///asylum.db", custom_table_info = irreg_table_info)
 llm = OpenAI(temperature = 0, openai_api_key="<Your OpenAI API key goes here>")
 db_chain = SQLDatabaseChain(llm=llm, database=db, verbose=True)
 
